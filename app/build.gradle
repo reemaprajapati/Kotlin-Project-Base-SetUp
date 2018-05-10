@@ -1,0 +1,75 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion Versions.compile_sdk
+    defaultConfig {
+        applicationId ApplicationId.application_id
+        minSdkVersion Versions.min
+        targetSdkVersion Versions.target_sdk
+        versionCode Releases.version_code
+        versionName Releases.version_name
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    kapt { generateStubs = true}
+    dataBinding {
+        enabled = true
+    }
+//
+//    defaultConfig {
+//        multiDexEnabled true
+//    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    api Libraries.kotlin_stdlib
+    //noinspection GradleCompatible
+    implementation SupportLibraries.appcompat
+    implementation SupportLibraries.constraint_layout
+    implementation SupportLibraries.design
+    testImplementation TestLibraries.junit
+    androidTestImplementation TestLibraries.support_test
+    androidTestImplementation TestLibraries.espresso
+    implementation Libraries.room
+    kapt Libraries.room_compiler
+    implementation Libraries.lifecycle
+    api Libraries.stetho
+//    kapt Libraries.databinding_compiler
+    implementation Libraries.glide
+    annotationProcessor Libraries.glide_compiler
+    api Libraries.dagger
+    api Libraries.dagger_support // if you use the support libraries
+    annotationProcessor Libraries.dagger_android_processor
+    api Libraries.retrofit
+    api Libraries.gson
+    implementation Libraries.logginginterceptor
+    implementation Libraries.rxjava
+    implementation "io.reactivex.rxjava2:rxandroid:2.0.2"
+
+    implementation Libraries.rxkotlin
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation "com.google.dagger:dagger-android:${Versions.dagger}"
+    kapt "com.google.dagger:dagger-android-processor:${Versions.dagger}"
+    compileOnly 'org.glassfish:javax.annotation:10.0-b28'
+    kapt 'com.google.dagger:dagger-compiler:2.14.1'
+//    implementation "com.github.leonardoxh:retrofit2-livedata-adapter:1.1.2"
+    implementation 'com.jakewharton.timber:timber:4.7.0'
+
+}
