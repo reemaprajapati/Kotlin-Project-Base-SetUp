@@ -10,4 +10,9 @@ class PostViewModel : BaseObservable() {
     fun getTitle(): String {
         return post.title
     }
+
+    @Bindable
+    fun getBody():String{
+        return post.body
+    }
 }

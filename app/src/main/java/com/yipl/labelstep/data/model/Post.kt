@@ -1,3 +1,8 @@
 package com.yipl.labelstep.data.model
 
-data class Post(val title: String)
+data class Post(
+        val userId: Int ,
+        val id: Int,
+        val title: String,
+        val body: String
+        )

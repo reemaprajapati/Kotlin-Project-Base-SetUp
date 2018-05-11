@@ -1,16 +1,16 @@
 package com.yipl.labelstep.di
 
 import android.app.Application
-
+import android.arch.persistence.room.Room
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.yipl.labelstep.api.ApiService
-import com.yipl.labelstep.util.LiveDataCallAdapterFactory
+import com.yipl.labelstep.data.database.LabelDatabase
 import com.yipl.labelstep.util.SchedulerProvider
 import dagger.Module
-import io.reactivex.android.schedulers.AndroidSchedulers
 import dagger.Provides
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -27,6 +27,7 @@ import javax.inject.Singleton
 @Module
 class AppModule {
 
+    var DATABASE_NAME = "label_database"
     @Provides
     @Singleton
     fun provideSchedulerProvider() = SchedulerProvider(Schedulers.io(), AndroidSchedulers.mainThread())
@@ -62,10 +63,29 @@ class AppModule {
     fun provideApiService(gson: Gson, okHttpClient: OkHttpClient): ApiService {
         return Retrofit.Builder()
                 .baseUrl("https://jsonplaceholder.typicode.com/")
-                .addCallAdapterFactory(LiveDataCallAdapterFactory())
 //                .addConverterFactory(LiveDataResponseBodyConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
+//                .addCallAdapterFactory(LiveDataCallAdapterFactory().)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(okHttpClient)
                 .build().create(ApiService::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideDatabase(application: Application): LabelDatabase {
+        val labelDatabase: LabelDatabase = Room
+                .databaseBuilder(
+                        application.applicationContext,
+                        LabelDatabase::class.java, DATABASE_NAME
+                )
+                .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build()
+        return labelDatabase
+    }
+
+    @Provides
+    @Singleton
+    fun provideDao(database: LabelDatabase) = database.daoAccess()
 }
