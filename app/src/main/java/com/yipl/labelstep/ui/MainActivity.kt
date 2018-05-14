@@ -1,10 +1,10 @@
 package com.yipl.labelstep.ui
 
 import android.arch.lifecycle.Observer
+import android.databinding.ViewDataBinding
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+
 import android.support.v7.widget.LinearLayoutManager
-import android.view.View
 import com.facebook.stetho.Stetho
 import com.yipl.labelstep.R
 import com.yipl.labelstep.base.BaseActivity
@@ -17,11 +17,19 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
-//
-//    override fun getLayout(): Int {
-//        return R.layout.activity_main
-//    }
+class MainActivity : BaseActivity() {
+
+    override fun isDataBindingEnabled(): Boolean {
+        return true
+    }
+
+    override fun getLayout(): Int {
+        return R.layout.activity_main
+    }
+
+    fun  getBinding(): ActivityMainBinding {
+        return binding as ActivityMainBinding
+    }
 
 
     lateinit var adapter: ListsAdapter
@@ -32,20 +40,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
         Stetho.initializeWithDefaults(this);
-        setContentView(R.layout.activity_main)
+//        setContentView(R.layout.activity_main)
+
         setUpRecyclerview()
-        button_getdata.setOnClickListener(View.OnClickListener {
+        getBinding().buttonGetdata.setOnClickListener({
             mainActivityViewModel.getPosts().subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe()
         })
         showPosts()
-
     }
+
     fun setUpRecyclerview() {
-        recyclerview.layoutManager = LinearLayoutManager(this)
+        getBinding().recyclerview.layoutManager = LinearLayoutManager(this)
         adapter = ListsAdapter(this)
-        recyclerview.adapter = adapter
+        getBinding().recyclerview.adapter = adapter
     }
 
     fun showPosts() {
