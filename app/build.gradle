@@ -16,6 +16,9 @@ android {
         versionName Releases.version_name
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+
+        buildConfigField("String", "BASE_URL_DEBUG", "\"http://http://ls.staging.yipl.com.np/\"")
+
     }
     buildTypes {
         release {

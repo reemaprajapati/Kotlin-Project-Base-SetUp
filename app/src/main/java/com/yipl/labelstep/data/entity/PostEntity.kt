@@ -1,4 +1,4 @@
-package com.yipl.labelstep.data.model
+package com.yipl.labelstep.data.entity
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
@@ -12,4 +12,6 @@ data  class PostEntity(
         @ColumnInfo(name = "title") var title: String,
         @ColumnInfo(name = "body") var body: String
         )
+
+
 

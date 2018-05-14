@@ -6,3 +6,7 @@ object Preference {
      val EXAMPLE_DATA="data"
 }
 
+object API{
+   const val STANDARD_LIST = "api/standards";
+}
+

@@ -2,9 +2,12 @@ package com.yipl.labelstep.di
 
 import android.app.Application
 import android.arch.persistence.room.Room
+import android.content.Context
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.yipl.labelstep.BuildConfig
+import com.yipl.labelstep.MainApplication
 import com.yipl.labelstep.api.ApiService
 import com.yipl.labelstep.data.AppPreferences
 import com.yipl.labelstep.data.database.LabelDatabase
@@ -29,6 +32,17 @@ import javax.inject.Singleton
 class AppModule {
 
     var DATABASE_NAME = "label_database"
+
+    lateinit var mMyApplication: MainApplication
+
+    fun ApplicationModule(application: MainApplication) {
+        mMyApplication = application
+    }
+
+    @Provides
+    @Singleton
+    fun provideApplicationContext(): Context = mMyApplication
+
     @Provides
     @Singleton
     fun provideSchedulerProvider() = SchedulerProvider(Schedulers.io(), AndroidSchedulers.mainThread())
@@ -63,7 +77,7 @@ class AppModule {
     @Singleton
     fun provideApiService(gson: Gson, okHttpClient: OkHttpClient): ApiService {
         return Retrofit.Builder()
-                .baseUrl("https://jsonplaceholder.typicode.com/")
+                .baseUrl(BuildConfig.BASE_URL_DEBUG)
 //                .addConverterFactory(LiveDataResponseBodyConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
 //                .addCallAdapterFactory(LiveDataCallAdapterFactory().)

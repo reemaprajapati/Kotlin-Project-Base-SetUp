@@ -1,10 +1,8 @@
 package com.yipl.labelstep.api
-import android.arch.lifecycle.LiveData
-import com.yipl.labelstep.api.model.IpAddress
-import com.yipl.labelstep.data.model.Post
-import com.yipl.labelstep.data.model.PostEntity
+import com.yipl.labelstep.data.API.STANDARD_LIST
+import com.yipl.labelstep.data.entity.PostEntity
+import com.yipl.labelstep.data.entity.StandardsEntity
 import io.reactivex.Observable
-import io.reactivex.Single
 import retrofit2.http.GET
 
 interface ApiService {
@@ -12,8 +10,10 @@ interface ApiService {
 //    @GET(".")
 //    fun getJsonResponse(): Single<IpAddress>
 
-    @GET("/posts")
-    fun getPosts():Observable<List<PostEntity>>
+//    @GET("/posts")
+//    fun getPosts():Observable<List<PostEntity>>
 
+    @GET(STANDARD_LIST)
+    fun getStandards(): Observable<StandardsEntity>
 
 }

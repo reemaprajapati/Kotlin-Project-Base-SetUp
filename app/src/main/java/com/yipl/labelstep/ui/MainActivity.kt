@@ -1,17 +1,12 @@
 package com.yipl.labelstep.ui
 
-import android.arch.lifecycle.Observer
 import android.os.Bundle
-
-import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import com.facebook.stetho.Stetho
 import com.yipl.labelstep.R
 import com.yipl.labelstep.base.BaseActivity
 import com.yipl.labelstep.data.AppPreferences
-import com.yipl.labelstep.data.model.Post
 import com.yipl.labelstep.databinding.ActivityMainBinding
-import com.yipl.labelstep.ui.adapter.ListsAdapter
 import dagger.android.AndroidInjection
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -19,7 +14,8 @@ import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
 
-    @Inject lateinit var appPreferences: AppPreferences
+    @Inject
+    lateinit var appPreferences: AppPreferences
 
     override fun isDataBindingEnabled(): Boolean {
         return true
@@ -29,12 +25,11 @@ class MainActivity : BaseActivity() {
         return R.layout.activity_main
     }
 
-    fun  getBinding(): ActivityMainBinding {
+    fun getBinding(): ActivityMainBinding {
         return binding as ActivityMainBinding
     }
 
-
-    lateinit var adapter: ListsAdapter
+    //    lateinit var adapter: ListsAdapter
     @Inject
     lateinit var mainActivityViewModel: MainActivityViewModel
 
@@ -44,25 +39,27 @@ class MainActivity : BaseActivity() {
         Stetho.initializeWithDefaults(this);
         appPreferences.example = "Test"
 
-        setUpRecyclerview()
+//        setUpRecyclerview()
         getBinding().buttonGetdata.setOnClickListener({
-            Log.e("MainActivity",appPreferences.example);
-            mainActivityViewModel.getPosts().subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe()
+            Log.e("MainActivity", appPreferences.example);
+//            mainActivityViewModel.getPosts().subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe()
+
+
         })
-        showPosts()
+//        showPosts()
     }
 
-    fun setUpRecyclerview() {
-        getBinding().recyclerview.layoutManager = LinearLayoutManager(this)
-        adapter = ListsAdapter(this)
-        getBinding().recyclerview.adapter = adapter
-    }
-
-    fun showPosts() {
-        mainActivityViewModel.showPosts().observe(this, Observer<List<Post>> { list -> adapter.swapData(list!!) })
-    }
+//    fun setUpRecyclerview() {
+//        getBinding().recyclerview.layoutManager = LinearLayoutManager(this)
+//        adapter = ListsAdapter(this)
+//        getBinding().recyclerview.adapter = adapter
+//    }
+//
+//    fun showPosts() {
+//        mainActivityViewModel.showPosts().observe(this, Observer<List<Post>> { list -> adapter.swapData(list!!) })
+//    }
 
 }
 
