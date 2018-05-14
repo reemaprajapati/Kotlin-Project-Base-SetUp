@@ -9,9 +9,11 @@ import retrofit2.http.GET
 
 interface ApiService {
 
-    @GET(".")
-    fun getJsonResponse(): Single<IpAddress>
+//    @GET(".")
+//    fun getJsonResponse(): Single<IpAddress>
 
     @GET("/posts")
     fun getPosts():Observable<List<PostEntity>>
+
+
 }

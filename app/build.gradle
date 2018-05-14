@@ -61,15 +61,17 @@ dependencies {
     api Libraries.gson
     implementation Libraries.logginginterceptor
     implementation Libraries.rxjava
-    implementation "io.reactivex.rxjava2:rxandroid:2.0.2"
 
     implementation Libraries.rxkotlin
-    api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    implementation "com.google.dagger:dagger-android:${Versions.dagger}"
-    kapt "com.google.dagger:dagger-android-processor:${Versions.dagger}"
+    implementation Libraries.rxandroid
+
+    api Libraries.retrofit_adapter
+    implementation Libraries.dagger_android
+    kapt Libraries.dagger_android_processor
     compileOnly 'org.glassfish:javax.annotation:10.0-b28'
     kapt 'com.google.dagger:dagger-compiler:2.14.1'
 //    implementation "com.github.leonardoxh:retrofit2-livedata-adapter:1.1.2"
     implementation 'com.jakewharton.timber:timber:4.7.0'
+
 
 }

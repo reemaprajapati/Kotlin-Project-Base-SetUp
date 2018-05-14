@@ -28,6 +28,8 @@ object Versions {
     val logging_interceptor= "3.8.0"
     val rxjava="2.1.9"
     val rxkotlin="2.2.0"
+    val rxandroid="2.0.2"
+    val retrofit_adapter = "2.3.0"
 }
 
 object Libraries {
@@ -47,6 +49,9 @@ object Libraries {
     val logginginterceptor= "com.squareup.okhttp3:logging-interceptor:${Versions.logging_interceptor}"
     val rxjava= "io.reactivex.rxjava2:rxjava:${Versions.rxjava}"
     val rxkotlin="io.reactivex.rxjava2:rxkotlin:${Versions.rxkotlin}"
+    val rxandroid="io.reactivex.rxjava2:rxandroid:${Versions.rxandroid}"
+    val retrofit_adapter = "com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofit_adapter}"
+    val dagger_android = "com.google.dagger:dagger-android:${Versions.dagger}"
 
 }
 

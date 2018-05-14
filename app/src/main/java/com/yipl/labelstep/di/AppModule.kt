@@ -6,6 +6,7 @@ import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.yipl.labelstep.api.ApiService
+import com.yipl.labelstep.data.AppPreferences
 import com.yipl.labelstep.data.database.LabelDatabase
 import com.yipl.labelstep.util.SchedulerProvider
 import dagger.Module
@@ -88,4 +89,11 @@ class AppModule {
     @Provides
     @Singleton
     fun provideDao(database: LabelDatabase) = database.daoAccess()
+
+
+    @Provides
+    @Singleton
+    fun provideAppPreferences(application: Application): AppPreferences {
+        return AppPreferences(application)
+    }
 }

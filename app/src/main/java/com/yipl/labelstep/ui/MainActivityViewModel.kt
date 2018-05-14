@@ -15,4 +15,6 @@ class MainActivityViewModel(private val repository: Repository, private val sche
     fun getPosts(): Observable<Boolean> = repository.getPosts()
 
     fun showPosts(): LiveData<List<Post>> = repository.showPosts()
+
+
 }
