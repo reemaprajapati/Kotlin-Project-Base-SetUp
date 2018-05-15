@@ -3,9 +3,7 @@ package com.yipl.labelstep.data.dao
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
-import com.yipl.labelstep.data.entity.Criteria
-import com.yipl.labelstep.data.entity.StandardsDataEntity
-import com.yipl.labelstep.data.entity.StandardsEntity
+import com.yipl.labelstep.data.entity.*
 
 @Dao
 interface DatabaseDao{
@@ -20,4 +18,11 @@ interface DatabaseDao{
 //
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCriteria(criteria: Criteria)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertSupplier(supplierDataEntity: SupplierDataEntity)
+
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertUpcomingAudits(upcomingAudits: UpcomingAudits)
 }

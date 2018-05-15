@@ -11,8 +11,8 @@ data class StandardsDataEntity(
         @SerializedName("standard_id")
         @PrimaryKey
         @ColumnInfo(name = "id")
-        var id: Int,
-        @ColumnInfo
+       var id: Int,
+        @ColumnInfo(name="standard_index")
         var code: Int,
         @ColumnInfo
         var name: String

@@ -6,7 +6,6 @@ import com.yipl.labelstep.data.AppPreferences
 import com.yipl.labelstep.exception.NetworkConnectionException
 import com.yipl.labelstep.ui.MainActivityViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import java.net.SocketException
 import javax.inject.Inject
@@ -17,20 +16,20 @@ public class PullSyncHelper @Inject constructor(var appPreferences: AppPreferenc
 
     public val TAG = "PullSyncHelper"
     val REQUEST_STANDARDS = 1
-    val REQUEST_AUDITS = 2
-    val REQUEST_SUPPLIERS = 3
+    val REQUEST_AUDITS = 3
+    val REQUEST_SUPPLIERS = 2
     val REQUEST_WAGE_RATE = 4
     var syncSuccessStatus: Boolean = false
     var syncPosition: Int = Int.MIN_VALUE
 
     public fun fetchData(position: Int) {
 //        syncSuccessStatus = true
-//        syncPosition = if (position == Int.MIN_VALUE) {
-//            1
-//        } else position
+        syncPosition = if (position == Int.MIN_VALUE) {
+            1
+        } else position
         Log.d("Pull Sync Helper", "Fetch Data Called")
-        Log.d("Pull", appPreferences.example)
-        pullData(1)
+        Log.d("Pull", position.toString())
+        pullData(position)
     }
 
     fun pullData(position: Int) {
@@ -41,6 +40,13 @@ public class PullSyncHelper @Inject constructor(var appPreferences: AppPreferenc
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({ SyncSubscriber() })
 
+            }
+
+            REQUEST_SUPPLIERS -> {
+                activityViewModel.getSuppliers()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({ SyncSubscriber() })
             }
 //            else ->
 //                return
@@ -55,7 +61,7 @@ public class PullSyncHelper @Inject constructor(var appPreferences: AppPreferenc
             super.onNext(t)
             Log.e(TAG, "Sync finished for: \t $syncPosition \tstatus: $t")
 //            if ((!t)) syncSuccessStatus = false
-//            syncPosition++
+            syncPosition++
         }
 
         override fun onError(t: Throwable?) {
@@ -63,14 +69,14 @@ public class PullSyncHelper @Inject constructor(var appPreferences: AppPreferenc
             Log.e(TAG, "Sync error for: \t " + syncPosition + " \tstatus: " + false + " \nerror: " + t!!.message)
             if (t is NetworkConnectionException || t is SocketException) {
 //                appPreferences.setDataFetchPosition(syncPosition)
-//                pullData(++syncPosition)
+                pullData(++syncPosition)
             }
         }
 
         override fun onCompleted() {
             super.onCompleted()
             Log.e("Sync Complete", "Complete")
-//            pullData(syncPosition)
+            pullData(syncPosition)
         }
     }
 

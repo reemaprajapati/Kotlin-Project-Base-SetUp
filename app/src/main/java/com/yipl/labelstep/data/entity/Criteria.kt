@@ -19,18 +19,22 @@ data class Criteria(
         @ColumnInfo
         var name: String,
 
-        @ColumnInfo
+        @ColumnInfo(name = "show_wage_field")
         @SerializedName("show_wage_field")
         var isShowWageField: Boolean,
 
-        @ColumnInfo
+        @ColumnInfo(name = "show_figure_field")
         @SerializedName("show_figure_field")
         var isShowFigureField: Boolean,
 
-        @ColumnInfo
+        @ColumnInfo(name = "show_ls_rate")
         @SerializedName("show_ls_rate")
         var isShowLsRate: Boolean,
 
-        @ColumnInfo
+        @ColumnInfo(name = "show_legal_rate")
         @SerializedName("show_legal_rate")
-        var isShowLegalRate: Boolean)
+        var isShowLegalRate: Boolean,
+
+        @ColumnInfo(name = "standard_id")
+        var standardId: Int
+)

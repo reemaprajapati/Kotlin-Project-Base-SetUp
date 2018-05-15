@@ -44,7 +44,7 @@ class MainActivity : BaseActivity() {
 //        setUpRecyclerview()
         getBinding().buttonGetdata.setOnClickListener({
             Log.e("MainActivity", appPreferences.example);
-            pullSyncHelper.fetchData(1)
+            pullSyncHelper.fetchData(2)
 //            mainActivityViewModel.getPosts().subscribeOn(Schedulers.io())
 //                    .observeOn(AndroidSchedulers.mainThread())
 //                    .subscribe()

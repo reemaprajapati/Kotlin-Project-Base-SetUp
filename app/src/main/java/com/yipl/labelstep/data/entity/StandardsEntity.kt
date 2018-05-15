@@ -4,9 +4,9 @@ import android.os.Parcel
 import android.os.Parcelable
 import java.util.*
 
-public class StandardsEntity : Parcelable {
-    public var success: Boolean = false
-    public var data: List<StandardsDataEntity>
+class StandardsEntity : Parcelable {
+     var success: Boolean = false
+     var data: List<StandardsDataEntity>
 
 
     override fun describeContents(): Int {
