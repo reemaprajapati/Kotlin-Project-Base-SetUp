@@ -13,4 +13,5 @@ abstract class ActivityBuilder {
     @ContributesAndroidInjector(modules = arrayOf(MainActivityModule::class))
     abstract fun bindMainActivity(): MainActivity
 
+
 }

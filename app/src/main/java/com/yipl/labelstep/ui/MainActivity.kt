@@ -7,15 +7,17 @@ import com.yipl.labelstep.R
 import com.yipl.labelstep.base.BaseActivity
 import com.yipl.labelstep.data.AppPreferences
 import com.yipl.labelstep.databinding.ActivityMainBinding
+import com.yipl.labelstep.network.PullSyncHelper
 import dagger.android.AndroidInjection
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
 
     @Inject
     lateinit var appPreferences: AppPreferences
+
+    @Inject
+    lateinit var pullSyncHelper: PullSyncHelper
 
     override fun isDataBindingEnabled(): Boolean {
         return true
@@ -42,6 +44,7 @@ class MainActivity : BaseActivity() {
 //        setUpRecyclerview()
         getBinding().buttonGetdata.setOnClickListener({
             Log.e("MainActivity", appPreferences.example);
+            pullSyncHelper.fetchData(1)
 //            mainActivityViewModel.getPosts().subscribeOn(Schedulers.io())
 //                    .observeOn(AndroidSchedulers.mainThread())
 //                    .subscribe()

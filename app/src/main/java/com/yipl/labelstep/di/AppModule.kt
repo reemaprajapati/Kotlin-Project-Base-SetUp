@@ -16,32 +16,29 @@ import dagger.Module
 import dagger.Provides
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.File
-import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 
 @Module
-class AppModule {
+class AppModule{
 
     var DATABASE_NAME = "label_database"
 
-    lateinit var mMyApplication: MainApplication
+//    lateinit var mMyApplication: MainApplication
 
-    fun ApplicationModule(application: MainApplication) {
-        mMyApplication = application
-    }
+//    fun ApplicationModule(application: MainApplication) {
+//        mMyApplication = application
+//
 
     @Provides
     @Singleton
-    fun provideApplicationContext(): Context = mMyApplication
+    fun provideApplicationContext(application: Application):Context= application.applicationContext
 
     @Provides
     @Singleton
@@ -60,12 +57,12 @@ class AppModule {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BASIC
 
-        val cacheDir = File(application.cacheDir, UUID.randomUUID().toString())
-        // 10 MiB cache
-        val cache = Cache(cacheDir, 10 * 1024 * 1024)
-
+//        val cacheDir = File(application.cacheDir, UUID.randomUUID().toString())
+//        // 10 MiB cache
+//        val cache = Cache(cacheDir, 10 * 1024 * 1024)
+//
         return OkHttpClient.Builder()
-                .cache(cache)
+//                .cache(cache)
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(60, TimeUnit.SECONDS)
                 .writeTimeout(60, TimeUnit.SECONDS)
@@ -78,9 +75,7 @@ class AppModule {
     fun provideApiService(gson: Gson, okHttpClient: OkHttpClient): ApiService {
         return Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL_DEBUG)
-//                .addConverterFactory(LiveDataResponseBodyConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
-//                .addCallAdapterFactory(LiveDataCallAdapterFactory().)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(okHttpClient)
                 .build().create(ApiService::class.java)

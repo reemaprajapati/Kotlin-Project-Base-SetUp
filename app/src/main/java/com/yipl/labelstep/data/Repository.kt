@@ -16,14 +16,18 @@ class Repository @Inject constructor(private val context: Context, private val a
 
     fun getStandards(): Observable<StandardsEntity> {
         if (isThereInternetConnection()) {
-            return apiService.getStandards()
+            return apiService.getStandards("Bearer "+ "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI2LCJpc3MiOiJodHRwOi8vbHMuc3RhZ2luZy55aXBsLmNvbS5ucC8vYXBpL2xvZ2luIiwiaWF0IjoxNTI2MzYyODgzLCJleHAiOjE1MjY0NDkyODMsIm5iZiI6MTUyNjM2Mjg4MywianRpIjoiUjZJNFVyZWNrUUxlRDZ3ZiJ9.ugLzN92A6DuZ9hAxZPNOUQacQCJM-dGw7qVCQySyxAU")
                     .doOnNext { standardEntity: StandardsEntity? ->
                         run {
                             for (entity in standardEntity!!.data) {
                                 dao.insertStandard(entity)
+                                for (criteria in entity.criteriaList){
+                                    dao.insertCriteria(criteria)
+                                }
                             }
                         }
                     }
+                    .doOnError { t: Throwable? -> t!!.printStackTrace() }
         } else run { return Observable.error(NetworkConnectionException()) }
     }
 
